@@ -5,8 +5,6 @@ import Posts from "../../components/common/Posts";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
 import EditProfileModal from "./EditProfileModal";
 
-import { POSTS } from "../../utils/db/dummy";
-
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { FaLink } from "react-icons/fa";
@@ -44,7 +42,7 @@ export default function ProfilePage() {
         const res = await fetch(`/api/user/profile/${username}`);
         const data = await res.json();
         if (!res.ok) {
-          throw new Error(data.message || "Something went wrong");
+          throw new Error(data.error || "Something went wrong");
         }
         return data;
       } catch (error) {
@@ -53,7 +51,7 @@ export default function ProfilePage() {
     },
   });
 
-  const { mutate: updateProfile, isPending: isUpdatingProfile } = useMutation({
+  const { mutateAsync: updateProfile, isPending: isUpdatingProfile } = useMutation({
     mutationFn: async () => {
       try {
         const res = await fetch("/api/user/update", {
@@ -108,6 +106,10 @@ export default function ProfilePage() {
     refetch();
   }, [username, refetch]);
 
+  const { data:posts} = useQuery({
+    queryKey: ['posts']
+  })
+
   return (
     <>
       <div className="flex-[4_4_0]  border-r border-gray-700 min-h-screen ">
@@ -126,7 +128,7 @@ export default function ProfilePage() {
                 <div className="flex flex-col">
                   <p className="font-bold text-lg">{user?.fullname}</p>
                   <span className="text-sm text-slate-500">
-                    {POSTS?.length} posts
+                    {posts?.length} posts
                   </span>
                 </div>
               </div>
@@ -200,7 +202,11 @@ export default function ProfilePage() {
                 {(coverImg || profileImg) && (
                   <button
                     className="btn btn-primary rounded-full btn-sm text-white px-4 ml-2"
-                    onClick={() => updateProfile()}
+                    onClick={async() => {
+                      await updateProfile()
+                      setProfileImg(null)
+                      setCoverImg(null)
+                    }}
                   >
                     {isUpdatingProfile ? "Updating..." : "Update"}
                   </button>
