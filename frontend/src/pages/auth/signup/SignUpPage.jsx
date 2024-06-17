@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import XSvg from "../../../components/svgs/X";
@@ -18,6 +18,8 @@ export default function SignUpPage() {
     fullname: "",
     password: "",
   });
+
+  const navigate = useNavigate()
 
   const { mutate, isError, isPending, error } = useMutation({
     mutationFn: async ({ email, username, fullname, password }) => {
@@ -44,6 +46,7 @@ export default function SignUpPage() {
     },
     onSuccess: () => {
       toast.success("Account created successfully")
+      navigate('/login')
     },
   });
 
