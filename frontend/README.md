@@ -1,8 +1,21 @@
-# React + Vite
+A full-stack Twitter clone built with the MERN stack (MongoDB, Express, React, Node.js). It features user authentication, tweet creation, likes, and follows. The app mimics core Twitter functionalities with a clean, responsive UI and real-time interactions.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Key Features:
 
-Currently, two official plugins are available:
+User authentication and profiles
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Tweet posting, liking, and following
+
+Real-time updates and notifications
+
+RESTful API backend with Express and MongoDB
+
+Tech Stack:
+
+MongoDB
+
+Express.js
+
+React
+
+Node.js
